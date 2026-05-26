@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFS Copperleaf — 2026 Europe Campaign Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b12;--bg2:#111119;--bg3:#17172a;--bg4:#1e1e30;--bg5:#25253a;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --text:#eeeef8;--text2:#9898b8;--text3:#55556a;
+  --purple:#7b6cf8;--purple2:#a99dfc;--purple-d:rgba(123,108,248,0.14);
+  --teal:#2dd4a0;--teal-d:rgba(45,212,160,0.11);
+  --amber:#f5a623;--amber-d:rgba(245,166,35,0.11);
+  --blue:#4daeff;--blue-d:rgba(77,174,255,0.11);
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+  --elec:#f5a623;--elec-d:rgba(245,166,35,0.12);
+  --egas:#a78bfa;--egas-d:rgba(167,139,250,0.12);
+  --ngas:#e879f9;--ngas-d:rgba(232,121,249,0.12);
+  --water:#38bdf8;--water-d:rgba(56,189,248,0.12);
+  --airports:#fb923c;--airports-d:rgba(251,146,60,0.12);
+  --rail:#4ade80;--rail-d:rgba(74,222,128,0.12);
+  --oilgas:#94a3b8;--oilgas-d:rgba(148,163,184,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ── HEADER ── */
+.page-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 40px 0;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:16px;flex-wrap:wrap}
+.brand-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.brand-dot{width:7px;height:7px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.brand-text{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+.page-title{font-size:26px;font-weight:600;color:var(--text);letter-spacing:-.025em}
+.goals-row{display:flex;gap:8px;flex-wrap:wrap}
+.goal-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 15px;min-width:110px}
+.goal-label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.goal-val{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.goal-of{font-size:12px;font-weight:400;color:var(--text3)}
+.goal-pct{font-size:11px;color:var(--text3);margin-top:1px}
+.goal-bar{height:2px;background:var(--border2);border-radius:2px;margin-top:7px;overflow:hidden}
+.goal-fill{height:100%;border-radius:2px}
+
+/* ── PRIMARY NAV (Account Heat | ABM Campaigns) ── */
+.primary-nav{display:flex;border-top:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.primary-nav::-webkit-scrollbar{display:none}
+.primary-tab{padding:11px 22px;font-size:14px;font-family:var(--font);font-weight:400;color:var(--text3);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s}
+.primary-tab:hover{color:var(--text2)}
+.primary-tab.active{color:var(--purple2);border-bottom-color:var(--purple);font-weight:600}
+
+/* ── SECONDARY NAV (All | UKI | CEU | SEU) ── */
+
+/* ── MAIN ── */
+.main{padding:28px 40px 80px;max-width:1380px;margin:0 auto}
+
+/* ── REGION TAB BAR (inside ABM view) ── */
+.region-tab-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.region-btn{padding:8px 20px;font-size:13px;font-family:var(--font);font-weight:500;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.region-btn:hover{border-color:var(--border3);color:var(--text);background:var(--bg4)}
+.region-btn.active{background:var(--purple-d);border-color:var(--purple);color:var(--purple2)}
+
+/* ── FILTER PILLS ── */
+.filter-bar{display:flex;align-items:center;gap:7px;margin-bottom:20px;flex-wrap:wrap}
+.filter-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-right:2px}
+.filter-pill{padding:5px 13px;font-size:12px;font-family:var(--font);border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-pill:hover{border-color:var(--border3);color:var(--text)}
+.filter-pill.active{border-color:var(--purple);background:var(--purple-d);color:var(--purple2)}
+
+/* ── SUMMARY STRIP ── */
+
+/* ── REGION GROUP ── */
+.region-group{margin-bottom:36px}
+.region-heading{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.region-name{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text2)}
+.region-line{flex:1;height:1px;background:var(--border)}
+.region-count{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.industry-group{margin-bottom:20px}
+.industry-heading{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.industry-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.industry-name{font-size:12px;font-weight:500}
+.cards-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+
+/* ── CAMPAIGN CARD ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:13px;transition:border-color .2s,transform .15s}
+.card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.015em;line-height:1.2}
+.card-subtitle{font-size:11px;color:var(--text3);margin-top:4px}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.status{font-size:10px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:.05em;border:1px solid transparent}
+.s-live{background:var(--teal-d);color:var(--teal);border-color:rgba(45,212,160,.2)}
+.s-paused{background:var(--amber-d);color:var(--amber);border-color:rgba(245,166,35,.2)}
+.obj-block{background:var(--purple-d);border:1px solid rgba(123,108,248,0.18);border-radius:9px;padding:11px 14px}
+.obj-label{font-size:10px;font-weight:600;color:var(--purple2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.obj-label::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.obj-text{font-size:12px;color:var(--text);line-height:1.55}
+.channels-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.ch-label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-right:2px}
+.ch-tag{font-size:10px;font-weight:500;padding:3px 8px;border-radius:5px;background:var(--bg4);color:var(--text2);border:1px solid var(--border2);white-space:nowrap}
+.card-divider{height:1px;background:var(--border)}
+.pipe-block{background:var(--bg3);border-radius:9px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pipe-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.pipe-val{font-size:22px;font-weight:600;color:var(--text);letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.pipe-stage{font-size:11px;color:var(--text3);text-align:right;line-height:1.4;max-width:160px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.stat{background:var(--bg3);border-radius:7px;padding:8px 9px}
+.stat-n{font-size:14px;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;line-height:1}
+.stat-d{font-size:10px;color:var(--text3);margin-top:3px;line-height:1.3}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+.bullets li{font-size:12px;color:var(--text2);display:flex;gap:9px;align-items:flex-start;line-height:1.45}
+.bullets li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:5px}
+.card-footer{border-top:1px solid var(--border);padding-top:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.next-label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.next-text{font-size:11px;color:var(--text2);line-height:1.45}
+.cta-btn{font-size:11px;font-family:var(--font);font-weight:500;padding:6px 13px;border:1px solid var(--border2);border-radius:7px;background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;transition:all .15s;text-decoration:none;flex-shrink:0}
+.cta-btn:hover{background:var(--purple-d);border-color:var(--purple);color:var(--purple2)}
+.empty{padding:60px 20px;text-align:center;color:var(--text3);font-size:14px}
+
+/* ── ACCOUNT HEAT ── */
+.heat-explainer{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.heat-explainer-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:12px}
+.heat-tiers{display:flex;gap:10px;flex-wrap:wrap}
+.heat-tier{display:flex;align-items:center;gap:10px;background:var(--bg3);border-radius:8px;padding:10px 14px;flex:1;min-width:190px}
+.tier-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tier-pts{font-size:12px;font-weight:600;color:var(--text)}
+.tier-desc{font-size:11px;color:var(--text3);margin-top:2px;line-height:1.35}
+.heat-legend{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;padding:12px 16px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);white-space:nowrap}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.heat-region-block{margin-bottom:32px}
+.heat-table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;overflow-x:auto}
+.heat-table{width:100%;border-collapse:collapse;min-width:700px}
+.heat-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding:10px 16px;text-align:left;background:var(--bg3);border-bottom:1px solid var(--border);white-space:nowrap}
+.heat-table th.r{text-align:right}
+.heat-table td{padding:11px 16px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);vertical-align:middle}
+.heat-table tr:last-child td{border-bottom:none}
+.heat-table tr:hover td{background:rgba(255,255,255,0.015)}
+.heat-table td.r{text-align:right}
+.acct-name{font-size:13px;font-weight:500;color:var(--text)}
+.acct-tags{margin-top:3px;display:flex;gap:4px;flex-wrap:wrap}
+.abm-tag{font-size:10px;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.abm-active{background:var(--teal-d);color:var(--teal);border:1px solid rgba(45,212,160,.2)}
+.abm-paused{background:var(--amber-d);color:var(--amber);border:1px solid rgba(245,166,35,.2)}
+.abm-few{background:var(--blue-d);color:var(--blue);border:1px solid rgba(77,174,255,.2)}
+.flag-tag{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--amber-d);color:var(--amber);border:1px solid rgba(245,166,35,.3)}
+.score-wrap{display:flex;align-items:center;gap:8px}
+.score-num{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+.score-bar-bg{flex:1;height:4px;background:var(--bg5);border-radius:2px;overflow:hidden;min-width:50px}
+.score-bar-fill{height:100%;border-radius:2px}
+.score-tier-label{font-size:10px;margin-top:3px;opacity:.85}
+.ind-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.abm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.dot-active{background:var(--teal);box-shadow:0 0 5px rgba(45,212,160,.4)}
+.dot-few{background:var(--blue);box-shadow:0 0 5px rgba(77,174,255,.3)}
+.dot-paused{background:var(--amber)}
+.dot-flag{background:var(--amber);box-shadow:0 0 6px rgba(245,166,35,.5)}
+.dot-none{background:var(--bg5);border:1px solid var(--border2)}
+.flag-alert{font-size:11px;color:var(--amber)}
+
+/* ── MISC ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px}
+@media(max-width:760px){
+  .page-header{padding:14px 16px 0}
+  .main{padding:18px 16px 50px}
+  .page-title{font-size:20px}
+  .cards-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ STICKY HEADER ══ -->
+<header class="page-header">
+  <div class="header-top">
+    <div>
+      <div class="brand-eyebrow"><span class="brand-dot"></span><span class="brand-text">IFS Copperleaf · Europe &amp; UK&amp;I Marketing</span></div>
+      <h1 class="page-title">2026 Campaign Hub</h1>
+    </div>
+    <div class="goals-row">
+      <div class="goal-card">
+        <p class="goal-label">MQLs YTD</p>
+        <p class="goal-val">106 <span class="goal-of">/ 262</span></p>
+        <p class="goal-pct">40% to target</p>
+        <div class="goal-bar"><div class="goal-fill" style="width:40%;background:var(--teal)"></div></div>
+      </div>
+      <div class="goal-card">
+        <p class="goal-label">SALs YTD</p>
+        <p class="goal-val">18 <span class="goal-of">/ 112</span></p>
+        <p class="goal-pct">16% to target</p>
+        <div class="goal-bar"><div class="goal-fill" style="width:16%;background:var(--blue)"></div></div>
+      </div>
+      <div class="goal-card">
+        <p class="goal-label">Pipeline YTD</p>
+        <p class="goal-val">€10.6M <span class="goal-of">/ €21.2M</span></p>
+        <p class="goal-pct">50% to target</p>
+        <div class="goal-bar"><div class="goal-fill" style="width:50%;background:var(--purple)"></div></div>
+      </div>
+      <div class="goal-card">
+        <p class="goal-label">ABM pipeline</p>
+        <p class="goal-val">€18.3M</p>
+        <p class="goal-pct">10 active campaigns</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMARY TABS -->
+  <nav class="primary-nav">
+    <button class="primary-tab active" onclick="setPrimary('heat',this)">Account Heat</button>
+    <button class="primary-tab" onclick="setPrimary('abm',this)">ABM Campaigns</button>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- ABM CONTROLS (hidden when in heat view) -->
+  <div id="abm-controls" style="display:none">
+    <div class="region-tab-bar">
+      <button class="region-btn active" onclick="setRegion('all',this)">All regions</button>
+      <button class="region-btn" onclick="setRegion('UKI',this)">UK &amp; Ireland</button>
+      <button class="region-btn" onclick="setRegion('CEU',this)">Central Europe</button>
+      <button class="region-btn" onclick="setRegion('SEU',this)">Southern Europe</button>
+    </div>
+    <div class="filter-bar">
+      <span class="filter-label">Industry</span>
+      <button class="filter-pill active" onclick="setIndustry('all',this)">All</button>
+      <button class="filter-pill" onclick="setIndustry('Electricity',this)">Electricity</button>
+      <button class="filter-pill" onclick="setIndustry('Electricity &amp; Gas',this)">Electricity &amp; Gas</button>
+      <button class="filter-pill" onclick="setIndustry('Water',this)">Water</button>
+      <button class="filter-pill" onclick="setIndustry('Airports',this)">Airports</button>
+      <button class="filter-pill" onclick="setIndustry('Rail',this)">Rail</button>
+    </div>
+  </div>
+
+  <!-- VIEWS -->
+  <div id="heat-view"></div>
+  <div id="abm-view" style="display:none"></div>
+</main>
+
+<script>
+/* ══════════════════════════════════════════════
+   CAMPAIGN DATA
+   Sorted region → industry per Copperleaf taxonomy
+══════════════════════════════════════════════ */
+const CAMPAIGNS = [
+  // ── UK & Ireland ──
+  {region:'UKI',industry:'Electricity',abmType:'1:Few',name:'DNOs 1:Few ABM',subtitle:'UK electricity distribution network operators',status:'live',
+   objective:'Position Copperleaf as the essential ED3 deliverability partner for UK DNOs before the RIIO-ED3 submission window closes.',
+   channels:['LinkedIn Ads','Demandbase','Email','Folloze Landing Page'],
+   pipe:'€5.84M',pipeRaw:5840000,stage:'UKPN Stage 2 · NGED Stage 2',
+   stats:[{n:'4/8',d:'Accounts engaged'},{n:'82',d:'Web visits ↓20%'},{n:'38',d:'Contacts reached'},{n:'€1,321',d:'Spend to date'}],
+   bullets:['UKPN €2.74M + NGED €3.1M pipeline at Stage 2 — largest 1:Few programme by pipeline value','Top engaged: National Grid, UKPN, ScottishPower, SSEN — 50% account engagement rate','Phase 2 live: ED3 deliverability carousel ads + gated executive one-pager + email sequence'],
+   next:'Retargeting sprint Mar–May: high-touch for 4 engaged accounts; urgency play for remaining 4 via ED3 timeline pressure',link:'#'},
+
+  {region:'UKI',industry:'Electricity',abmType:'1:1',name:'ABM 1:1 — UKPN',subtitle:'UK Power Networks — deal acceleration',status:'live',
+   objective:'Convert high-intent ED3 engagement from the 1:Few programme into a structured sales conversation and accelerate the Stage 2 opportunity at UKPN.',
+   channels:['LinkedIn Ads','Demandbase','Email','Folloze Landing Page'],
+   pipe:'€914K',pipeRaw:914000,stage:'Stage 2',
+   stats:[{n:'12',d:'Web visits ↑10%'},{n:'€620',d:'Spend to date'},{n:'1',d:'Active opportunity'},{n:'S2',d:'Deal stage'}],
+   bullets:['Emerged directly from the DNO 1:Few ED3 campaign — an ABM-created opportunity','Folloze landing page + LinkedIn ads + Demandbase + personalised email in orchestration','ED3 deliverability and investment defensibility are the primary deal acceleration hooks'],
+   next:'Deepen buying group; integrate into DNO retargeting sprint with targeted C-level outreach',link:'#'},
+
+  {region:'UKI',industry:'Water',abmType:'1:Few',name:'Water Campaign UK&I',subtitle:'UK & Irish water utilities — AMP8 / PR29',status:'live',
+   objective:'Build Copperleaf\'s authority on AMP8 delivery challenges and capture pipeline from UK water companies heading into their PR29 planning cycle.',
+   channels:['Email Nurture','LinkedIn Ads','Demandbase','SEO Blogs','Folloze Landing Page'],
+   pipe:'€1.40M',pipeRaw:1400000,stage:'Portsmouth Stage 1 · Yorkshire Stage 2',
+   stats:[{n:'218',d:'Contacts reached'},{n:'662',d:'Web visits ↑50%'},{n:'28',d:'Target accounts'},{n:'€0',d:'Spend (organic)'}],
+   bullets:['Yorkshire Water €2.29M (S2) + Portsmouth Water €60K (S1) pipeline influenced','AMP8/PR29 blog series running year-round: 5 live (Feb–Mar), 9 more planned through June','Email nurture + LinkedIn paid + Demandbase always-on display across full account list'],
+   next:'Water Community Indaba at Scottish Water (Sept); video interviews South Staffs + Irish Water in production',link:'#'},
+
+  {region:'UKI',industry:'Water',abmType:'1:1',name:'ABM 1:1 — Anglian Water',subtitle:'Renewal + Accelerate upsell (IB account)',status:'live',
+   objective:'Protect and grow an IB renewal at Stage 4 while running a parallel Accelerate upsell — using indirect ABM only, as the account is in an active decision window.',
+   channels:['LinkedIn Ads','Folloze Landing Page','Sales Messaging','Gifting'],
+   pipe:'€1.09M',pipeRaw:1090000,stage:'Renewal Stage 4 · Accelerate Stage 2',
+   stats:[{n:'110',d:'Contacts reached'},{n:'41',d:'Web visits ↑95%'},{n:'€620',d:'Spend to date'},{n:'2',d:'Active opportunities'}],
+   bullets:['Two parallel opportunities: Renewal €779K at Stage 4 + Accelerate upsell €57.9K at Stage 2','Account in active decision window — indirect ABM only, no direct contact permitted','Folloze landing page + LinkedIn messaging + executive sales enablement content'],
+   next:'Gifting programme for key contacts; outreach timing to align with renewal decision window',link:'#'},
+
+  {region:'UKI',industry:'Airports',abmType:'1:Few',name:'Airports 1:Few — UK&I',subtitle:'UK & Irish airport operators',status:'live',
+   objective:'Build buying group awareness across UK and Irish airport operators who face growing CAPEX pressure and sustainability mandates but have low Copperleaf awareness.',
+   channels:['LinkedIn Ads','Demandbase','Email Nurture','Folloze Landing Page'],
+   pipe:'€343K',pipeRaw:343000,stage:'Gatwick Stage 2 · Bristol Stage 1',
+   stats:[{n:'5',d:'Accounts engaged'},{n:'136',d:'Web visits ↑183%'},{n:'105',d:'Contacts reached'},{n:'€816',d:'Spend to date'}],
+   bullets:['Gatwick €343K at Stage 2; Bristol, Birmingham, Dublin Airport, Avinor all pipeline-influenced','Top email click-throughs: MAG ×2, Heathrow, Gatwick — all confirmed engaged contacts','Phase 2 LinkedIn ads live: capital allocation as strategic advantage + carbon compliance narrative'],
+   next:'Airports Innovate Barcelona (Nov); International Airport Review webinar and exec round table Q3',link:'#'},
+
+  {region:'UKI',industry:'Rail',abmType:'1:1',name:'ABM 1:1 — Network Rail',subtitle:'Enterprise portfolio expansion — C-level only',status:'live',
+   objective:'Elevate the Network Rail relationship from a single-region engagement to an enterprise-wide Copperleaf deployment by securing C-level sponsorship across all NR regions.',
+   channels:['LinkedIn Ads','Folloze Landing Page','Sales Messaging','Event Activation'],
+   pipe:'€1.37M',pipeRaw:1370000,stage:'Stage 2',
+   stats:[{n:'190',d:'Contacts reached'},{n:'55',d:'Web visits ↑175%'},{n:'€620',d:'Spend to date'},{n:'S2',d:'Deal stage'}],
+   bullets:['Enterprise-first approach: C-level contacts only, Copperleaf portfolio across all NR regions','Strongest contact reach of all 1:1 campaigns — 190 people engaged across the account','Global Railway Review Report (Apr) deployed as a high-value, account-specific content anchor'],
+   next:'InnoTrans Berlin (Sept) as flagship event anchor; AIP Forum UK&I (Apr) pre-event warmth',link:'#'},
+
+  // ── Central Europe ──
+  {region:'CEU',industry:'Electricity',abmType:'1:1',name:'ABM 1:1 — Amprion',subtitle:'German electricity TSO — active tender',status:'live',
+   objective:'Ensure Copperleaf remains the clear frontrunner through the final stages of a competitive Stage 5 tender at one of Germany\'s four major TSOs.',
+   channels:['LinkedIn Ads','Demandbase','Folloze Landing Page'],
+   pipe:'€2.68M',pipeRaw:2680000,stage:'Stage 5 — active tender',
+   stats:[{n:'20',d:'Web visits ↑200%'},{n:'€620',d:'Spend to date'},{n:'1',d:'Active tender'},{n:'S5',d:'Highest deal stage'}],
+   bullets:['Stage 5 active tender — highest deal stage across the entire European ABM portfolio','200% visit growth confirms strong account engagement with Copperleaf value content','Folloze + LinkedIn ads + Demandbase display focused on deal acceleration'],
+   next:'Maintain intensive multi-touch presence through tender decision; AIP Forum CEU (Düsseldorf, Sept)',link:'#'},
+
+  {region:'CEU',industry:'Electricity & Gas',abmType:'1:1',name:'ABM 1:1 — Norsk Hydro',subtitle:'Combined energy portfolio — paused',status:'paused',
+   objective:'Re-ignite a closed lost opportunity by repositioning Copperleaf as a transformation partner — campaign now paused after the opp was formally closed lost.',
+   channels:['Email','LinkedIn Ads','Demandbase'],
+   pipe:'—',pipeRaw:0,stage:'Closed lost',
+   stats:[{n:'33',d:'Web visits'},{n:'16',d:'Contacts reached'},{n:'€1,116',d:'Spend to date'},{n:'CL',d:'Opp status'}],
+   bullets:['Opportunity closed lost — campaign paused pending reassessment of account strategy','Email sequence showed strong progression: 7% → 14% → 19% open rate','LinkedIn ads validated messaging resonance at Partner, CXO and VP seniority levels'],
+   next:'Reassess re-engagement strategy for H2; explore alternative stakeholder entry points',link:'#'},
+
+  // ── Southern Europe ──
+  {region:'SEU',industry:'Electricity & Gas',abmType:'1:1',name:'ABM 1:1 — Unareti',subtitle:'A2A group — Gas & Electricity distribution',status:'live',
+   objective:'Support a stalled Stage 3 deal by influencing the A2A parent company and broadening the buying group while the Unareti opportunity reopens in September.',
+   channels:['LinkedIn Ads','Folloze Landing Page','1:1 Sales Email','Physical Event Assets'],
+   pipe:'€390K',pipeRaw:390000,stage:'Gas Stage 3 · AIP €2.8M Stage 3',
+   stats:[{n:'13',d:'Contacts reached'},{n:'0',d:'Web visits'},{n:'€1,116',d:'Spend to date'},{n:'S3',d:'Deal stage'}],
+   bullets:['Deal stalled to Sept — focus shifted to influencing A2A parent company to expand buying group','HQ meeting completed Feb 25; 3 contacts in buying group, expansion underway','Personalised Folloze + LinkedIn ads + 1:1 sales email sequence all live'],
+   next:'Parent company influence strategy running; IFS Connect Italy (May) as next engagement',link:'#'},
+
+  {region:'SEU',industry:'Electricity & Gas',abmType:'1:1',name:'ABM 1:1 — ACEA / ARETI',subtitle:'ACEA group — Electricity distribution Rome',status:'live',
+   objective:'Maintain brand depth and grow the buying group at ACEA group level while the ARETI AIP deal sits stalled, so Copperleaf is the clear frontrunner when the process resumes in September.',
+   channels:['Email','LinkedIn Ads','Demandbase'],
+   pipe:'€2.00M',pipeRaw:2000000,stage:'ARETI AIP Stage 3',
+   stats:[{n:'52',d:'Contacts reached'},{n:'251',d:'Web visits ↑90%'},{n:'€712',d:'Spend to date'},{n:'S3',d:'Deal stage'}],
+   bullets:['251 web visits — highest content engagement of any 1:1 campaign in the portfolio','Deal stalled to Sept — ABM maintaining buying group breadth and brand depth at ACEA group level','Email + LinkedIn ads + Demandbase display in full multi-channel orchestration'],
+   next:'CIFRAMI Paris (Oct) as executive touchpoint; parent company influence strategy through summer',link:'#'},
+
+  {region:'SEU',industry:'Rail',abmType:'1:1',name:'ABM 1:1 — Infraestruturas de Portugal',subtitle:'National rail infrastructure — active tender',status:'live',
+   objective:'Ensure Copperleaf is positioned as the clear choice throughout an active formal tender at Infraestruturas de Portugal — Portugal\'s national rail infrastructure manager.',
+   channels:['LinkedIn Ads','Folloze Landing Page','Event Activation'],
+   pipe:'€1.24M',pipeRaw:1235000,stage:'Stage 3 — active tender',
+   stats:[{n:'23',d:'Contacts reached'},{n:'38',d:'Web visits'},{n:'€1,240',d:'Spend to date'},{n:'S3',d:'Deal stage'}],
+   bullets:['Account in active tendering process — ABM focused on positioning Copperleaf to win','Folloze + LinkedIn ads targeting capital planning and asset management personas','IFS Connect Italy (May) and AIP Forum SEU (Q3) as key event touchpoints'],
+   next:'Maintain consistent visibility through tender decision; prioritise executive content delivery',link:'#'},
+];
+
+/* ── INDUSTRY CONFIG ── */
+const IND_CONFIG = {
+  'Electricity':       {color:'var(--elec)',    bg:'var(--elec-d)'},
+  'Electricity & Gas': {color:'var(--egas)',    bg:'var(--egas-d)'},
+  'Natural Gas':       {color:'var(--ngas)',    bg:'var(--ngas-d)'},
+  'Water':             {color:'var(--water)',   bg:'var(--water-d)'},
+  'Airports':          {color:'var(--airports)',bg:'var(--airports-d)'},
+  'Rail':              {color:'var(--rail)',    bg:'var(--rail-d)'},
+  'Oil & Gas':         {color:'var(--oilgas)',  bg:'var(--oilgas-d)'},
+};
+const IND_ORDER  = ['Electricity','Electricity & Gas','Natural Gas','Water','Airports','Rail','Oil & Gas'];
+const REG_LABELS = {UKI:'UK & Ireland',CEU:'Central Europe',SEU:'Southern Europe'};
+
+/* ── TAM ENGAGEMENT DATA ── */
+const TAM = {
+  UKI:[
+    {rank:1, name:'Shell PLC',             industry:'Oil & Gas',         eng:900,people:185,opps:1,pipeline:'—',     stage:'1 – Qualification',       abm:null,   flag:true },
+    {rank:2, name:'Irish Water (IW)',       industry:'Water',             eng:604,people:25, opps:4,pipeline:'—',     stage:'5 – Selection',           abm:'few',  flag:false},
+    {rank:3, name:'National Grid plc',      industry:'Electricity',       eng:425,people:26, opps:0,pipeline:'—',     stage:'—',                       abm:'few',  flag:false},
+    {rank:4, name:'Anglian Water Services', industry:'Water',             eng:367,people:18, opps:3,pipeline:'€1.09M',stage:'4 – Proposal / RFP',      abm:'active',flag:false},
+    {rank:5, name:'Network Rail (NR)',      industry:'Rail',              eng:308,people:50, opps:2,pipeline:'€1.37M',stage:'2 – Discovery',           abm:'active',flag:false},
+    {rank:6, name:'Cadent Gas',             industry:'Natural Gas',       eng:292,people:6,  opps:2,pipeline:'—',     stage:'4 – Proposal / RFP',      abm:null,   flag:true },
+    {rank:7, name:'SSE plc',                industry:'Electricity & Gas', eng:287,people:5,  opps:0,pipeline:'—',     stage:'—',                       abm:null,   flag:true },
+    {rank:8, name:'Portsmouth Water (PW)',  industry:'Water',             eng:259,people:4,  opps:2,pipeline:'€60K',  stage:'2 – Discovery',           abm:'few',  flag:false},
+    {rank:9, name:'Affinity Water',         industry:'Water',             eng:247,people:8,  opps:2,pipeline:'—',     stage:'2 – Discovery',           abm:'few',  flag:false},
+    {rank:10,name:'BP British Petroleum',   industry:'Oil & Gas',         eng:222,people:23, opps:0,pipeline:'—',     stage:'—',                       abm:null,   flag:true },
+  ],
+  CEU:[
+    {rank:1, name:'Gasunie (GSU)',          industry:'Natural Gas',       eng:367,people:15, opps:2,pipeline:'€720K', stage:'High Engagement',         abm:null,   flag:true },
+    {rank:2, name:'50Hertz',                industry:'Electricity',       eng:259,people:13, opps:2,pipeline:'€1.21M',stage:'High Engagement',         abm:null,   flag:true },
+    {rank:3, name:'E.ON SE',                industry:'Electricity & Gas', eng:241,people:15, opps:2,pipeline:'€500K', stage:'High Engagement',         abm:null,   flag:true },
+    {rank:4, name:'Enexis',                 industry:'Electricity',       eng:184,people:13, opps:4,pipeline:'€900K', stage:'High Engagement',         abm:null,   flag:true },
+    {rank:5, name:'e-netz Südhessen AG',    industry:'Electricity',       eng:182,people:6,  opps:1,pipeline:'€1.07M',stage:'High Engagement',         abm:null,   flag:true },
+    {rank:6, name:'Amprion GmbH',           industry:'Electricity',       eng:145,people:25, opps:2,pipeline:'€2.68M',stage:'5 – Active tender',       abm:'active',flag:false},
+    {rank:7, name:'Norsk Hydro',            industry:'Electricity & Gas', eng:132,people:13, opps:0,pipeline:'—',     stage:'Closed lost',             abm:'paused',flag:false},
+    {rank:8, name:'ELIA',                   industry:'Electricity',       eng:126,people:3,  opps:5,pipeline:'€1.11M',stage:'High Engagement',         abm:null,   flag:true },
+    {rank:9, name:'DB InfraGo AG',          industry:'Rail',              eng:116,people:20, opps:1,pipeline:'€1.80M',stage:'High Engagement',         abm:null,   flag:true },
+    {rank:10,name:'TenneT TSO Germany',     industry:'Electricity',       eng:101,people:6,  opps:3,pipeline:'€863K', stage:'High Engagement',         abm:null,   flag:true },
+  ],
+  SEU:[
+    {rank:1, name:'Societa Gasdotti Italia',industry:'Natural Gas',       eng:100,people:4,  opps:1,pipeline:'€2.34M',stage:'4 – Proposal / RFP',      abm:null,   flag:true },
+    {rank:2, name:'Réseau de Transport',    industry:'Electricity',       eng:65, people:19, opps:1,pipeline:'€2.59M',stage:'3 – Positioning to Win',  abm:null,   flag:true },
+    {rank:3, name:'E-Redes España',         industry:'Electricity',       eng:52, people:8,  opps:1,pipeline:'€656K', stage:'3 – Positioning to Win',  abm:null,   flag:true },
+    {rank:4, name:'E-REDES Portugal',       industry:'Electricity',       eng:48, people:11, opps:1,pipeline:'€549K', stage:'6 – Contract Negotiation',abm:null,   flag:false},
+    {rank:5, name:'Unareti SpA',            industry:'Electricity & Gas', eng:2.5,people:2,  opps:1,pipeline:'€3.21M',stage:'3 – Positioning to Win',  abm:'active',flag:false},
+    {rank:6, name:'RATP',                   industry:'Rail',              eng:13, people:10, opps:1,pipeline:'€2.12M',stage:'1 – Qualification',       abm:null,   flag:true },
+    {rank:7, name:'Gruppo Hera',            industry:'Electricity & Gas', eng:13, people:20, opps:1,pipeline:'€2.00M',stage:'2 – Discovery',           abm:null,   flag:true },
+    {rank:8, name:'Natran (exGRT Gaz)',     industry:'Natural Gas',       eng:5.3,people:18, opps:1,pipeline:'€2.77M',stage:'1 – Qualification',       abm:null,   flag:true },
+    {rank:9, name:'Gruppo Iren',            industry:'Electricity & Gas', eng:4.5,people:15, opps:1,pipeline:'€1.35M',stage:'2 – Discovery',           abm:null,   flag:true },
+    {rank:10,name:'BOTAS',                  industry:'Oil & Gas',         eng:0,  people:0,  opps:1,pipeline:'€1.80M',stage:'1 – Qualification',       abm:null,   flag:false},
+  ]
+};
+const MAX_ENG = {UKI:900,CEU:367,SEU:100};
+
+/* ══ STATE ══ */
+let activePrimary  = 'heat';
+let activeRegion   = 'all';
+let activeIndustry = 'all';
+
+/* ══ PRIMARY TAB ══ */
+function setPrimary(tab, btn) {
+  activePrimary = tab;
+  document.querySelectorAll('.primary-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const abmCtrl = document.getElementById('abm-controls');
+  const heatV   = document.getElementById('heat-view');
+  const abmV    = document.getElementById('abm-view');
+
+  if (tab === 'heat') {
+    abmCtrl.style.display = 'none';
+    heatV.style.display   = '';
+    abmV.style.display    = 'none';
+    renderHeat();
+  } else {
+    abmCtrl.style.display = '';
+    heatV.style.display   = 'none';
+    abmV.style.display    = '';
+    renderABM();
+  }
+}
+
+/* ══ SECONDARY (REGION) TAB ══ */
+function setRegion(r, btn) {
+  activeRegion = r;
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderABM();
+}
+
+/* ══ INDUSTRY FILTER ══ */
+function setIndustry(i, btn) {
+  activeIndustry = i;
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderABM();
+}
+
+/* ══ HELPERS ══ */
+function fmtPipe(raw) {
+  if (!raw) return '—';
+  if (raw >= 1e6) return '€' + (raw/1e6).toFixed(1).replace(/\.0$/,'') + 'M';
+  if (raw >= 1e3) return '€' + Math.round(raw/1e3) + 'K';
+  return '€' + raw;
+}
+function statusClass(s) { return s==='live'?'s-live':'s-paused'; }
+function statusLabel(s) { return s==='live'?'Live':'Paused'; }
+
+function engTier(eng) {
+  if (eng >= 60) return {color:'#2dd4a0', label:'Sales conversation / demo in motion'};
+  if (eng >= 25) return {color:'#a78bfa', label:'Webinar or event attended'};
+  return              {color:'#55556a',  label:'Web & product page visits'};
+}
+
+/* ══ RENDER ABM CAMPAIGNS ══ */
+function renderABM() {
+  const filtered = CAMPAIGNS.filter(c =>
+    (activeRegion === 'all' || c.region === activeRegion) &&
+    (activeIndustry === 'all' || c.industry === activeIndustry)
+  );
+
+  // update summary
+  const total = filtered.reduce((s,c) => s + c.pipeRaw, 0);
+
+  if (!filtered.length) {
+    document.getElementById('abm-view').innerHTML = '<div class="empty">No campaigns match this filter.</div>';
+    return;
+  }
+
+  const regions = activeRegion === 'all' ? ['UKI','CEU','SEU'] : [activeRegion];
+  let html = '';
+
+  for (const r of regions) {
+    const rC = filtered.filter(c => c.region === r);
+    if (!rC.length) continue;
+
+    html += `<div class="region-group">
+      ${activeRegion === 'all' ? `<div class="region-heading">
+        <span class="region-name">${REG_LABELS[r]}</span>
+        <span class="region-line"></span>
+        <span class="region-count">${rC.length} campaign${rC.length!==1?'s':''}</span>
+      </div>` : ''}`;
+
+    const inds = activeIndustry === 'all'
+      ? IND_ORDER.filter(i => rC.some(c => c.industry === i))
+      : [activeIndustry];
+
+    for (const ind of inds) {
+      const iC = rC.filter(c => c.industry === ind);
+      if (!iC.length) continue;
+      const cfg = IND_CONFIG[ind] || {color:'var(--text3)',bg:'var(--bg4)'};
+      html += `<div class="industry-group">
+        <div class="industry-heading">
+          <span class="industry-dot" style="background:${cfg.color}"></span>
+          <span class="industry-name" style="color:${cfg.color}">${ind}</span>
+        </div>
+        <div class="cards-row">${iC.map(c => cardHTML(c, cfg)).join('')}</div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  document.getElementById('abm-view').innerHTML = html;
+}
+
+function cardHTML(c, cfg) {
+  return `<div class="card">
+    <div class="card-head">
+      <div>
+        <p class="card-title">${c.name}</p>
+        <p class="card-subtitle">${c.subtitle}</p>
+        <div class="card-tags">
+          <span class="tag" style="background:${cfg.bg};color:${cfg.color}">${c.industry}</span>
+          <span class="tag" style="background:var(--bg4);color:var(--text3);border:1px solid var(--border2)">${c.abmType}</span>
+        </div>
+      </div>
+      <span class="status ${statusClass(c.status)}">${statusLabel(c.status)}</span>
+    </div>
+    <div class="obj-block">
+      <p class="obj-label">Why this campaign was launched</p>
+      <p class="obj-text">${c.objective}</p>
+    </div>
+    <div class="channels-row">
+      <span class="ch-label">Channels</span>
+      ${c.channels.map(ch=>`<span class="ch-tag">${ch}</span>`).join('')}
+    </div>
+    <div class="card-divider"></div>
+    <div class="pipe-block">
+      <div><p class="pipe-label">Pipeline influenced</p><p class="pipe-val">${c.pipe}</p></div>
+      <p class="pipe-stage">${c.stage}</p>
+    </div>
+    <div class="stats-grid">
+      ${c.stats.map(s=>`<div class="stat"><p class="stat-n">${s.n}</p><p class="stat-d">${s.d}</p></div>`).join('')}
+    </div>
+    <ul class="bullets">${c.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+    <div class="card-footer">
+      <div><p class="next-label">What's next</p><p class="next-text">${c.next}</p></div>
+      <a class="cta-btn" href="${c.link}" target="_blank">Full deck ↗</a>
+    </div>
+  </div>`;
+}
+
+/* ══ RENDER ACCOUNT HEAT ══ */
+function renderHeat() {
+  let html = `
+    <div class="heat-explainer">
+      <p class="heat-explainer-title">How to read the engagement score</p>
+      <div class="heat-tiers">
+        <div class="heat-tier">
+          <span class="tier-dot" style="background:#55556a"></span>
+          <div><p class="tier-pts">1 – 24 pts</p><p class="tier-desc">Web visits &amp; product page views — passive interest</p></div>
+        </div>
+        <div class="heat-tier">
+          <span class="tier-dot" style="background:#a78bfa;box-shadow:0 0 6px rgba(167,139,250,.4)"></span>
+          <div><p class="tier-pts">25 – 59 pts</p><p class="tier-desc">Webinar or event attended — active marketing engagement</p></div>
+        </div>
+        <div class="heat-tier">
+          <span class="tier-dot" style="background:#2dd4a0;box-shadow:0 0 6px rgba(45,212,160,.4)"></span>
+          <div><p class="tier-pts">60+ pts</p><p class="tier-desc">Demo requested or sales conversation in motion — sales-ready signal</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="heat-legend">
+      <span style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-right:4px">ABM status</span>
+      <span class="legend-item"><span class="legend-dot dot-active"></span>Active 1:1 ABM</span>
+      <span class="legend-item"><span class="legend-dot dot-few"></span>1:Few campaign</span>
+      <span class="legend-item"><span class="legend-dot dot-paused"></span>ABM paused</span>
+      <span class="legend-item"><span class="legend-dot dot-flag"></span>High engagement — no ABM</span>
+      <span class="legend-item"><span class="legend-dot dot-none"></span>In TAM — no campaign</span>
+    </div>`;
+
+  for (const r of ['UKI','CEU','SEU']) {
+    const accounts = TAM[r];
+    const maxEng   = MAX_ENG[r];
+    const flags    = accounts.filter(a => a.flag).length;
+
+    html += `<div class="heat-region-block">
+      <div class="region-heading">
+        <span class="region-name">${REG_LABELS[r]}</span>
+        <span class="region-line"></span>
+        ${flags ? `<span class="flag-alert">⚑ ${flags} high-engagement account${flags!==1?'s':''} with no active ABM</span>` : ''}
+      </div>
+      <div class="heat-table-wrap">
+        <table class="heat-table">
+          <thead><tr>
+            <th>#</th>
+            <th>Account</th>
+            <th>Industry</th>
+            <th>Engagement score <span style="font-weight:400;opacity:.5">(3 mo.)</span></th>
+            <th>Known people</th>
+            <th>Open opps</th>
+            <th>Latest opp stage</th>
+            <th class="r">Pipeline</th>
+          </tr></thead>
+          <tbody>
+            ${accounts.map(a => {
+              const tier = engTier(a.eng);
+              const pct  = Math.min(100, Math.round((a.eng / maxEng) * 100));
+              const indCfg = IND_CONFIG[a.industry] || {color:'var(--text3)',bg:'var(--bg4)'};
+              const dotCls = a.abm==='active'?'dot-active':a.abm==='few'?'dot-few':a.abm==='paused'?'dot-paused':a.flag?'dot-flag':'dot-none';
+              const abmTag = a.abm==='active'?'<span class="abm-tag abm-active">ABM active</span>'
+                            :a.abm==='few'   ?'<span class="abm-tag abm-few">1:Few campaign</span>'
+                            :a.abm==='paused'?'<span class="abm-tag abm-paused">ABM paused</span>'
+                            :a.flag          ?'<span class="flag-tag">⚑ No ABM</span>'
+                            :'';
+              return `<tr>
+                <td style="color:var(--text3);font-family:var(--mono);font-size:11px">${a.rank}</td>
+                <td>
+                  <div style="display:flex;align-items:flex-start;gap:9px">
+                    <span class="abm-dot ${dotCls}" style="margin-top:4px"></span>
+                    <div>
+                      <div class="acct-name">${a.name}</div>
+                      <div class="acct-tags">${abmTag}</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="ind-badge" style="background:${indCfg.bg};color:${indCfg.color};border:1px solid ${indCfg.color}22">${a.industry}</span></td>
+                <td style="min-width:180px">
+                  <div class="score-wrap">
+                    <span class="score-num" style="color:${tier.color}">${a.eng}</span>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width:${pct}%;background:${tier.color}"></div></div>
+                  </div>
+                  <div class="score-tier-label" style="color:${tier.color}">${tier.label}</div>
+                </td>
+                <td style="font-variant-numeric:tabular-nums">${a.people}</td>
+                <td style="font-variant-numeric:tabular-nums">${a.opps}</td>
+                <td style="font-size:11px;color:var(--text3)">${a.stage}</td>
+                <td class="r" style="font-variant-numeric:tabular-nums;font-size:12px">${a.pipeline}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('heat-view').innerHTML = html;
+}
+
+/* ══ INIT — Account Heat loads first ══ */
+renderHeat();
+</script>
+</body>
+</html>
